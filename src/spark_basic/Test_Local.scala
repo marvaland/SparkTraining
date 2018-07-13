@@ -1,4 +1,4 @@
-package main.scala
+package spark_basic
 
 import org.apache.spark.sql.SparkSession
 import java.util.concurrent.Executors
@@ -11,7 +11,7 @@ import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future, _}
 import scala.util.control.NonFatal
 
-object TestLocal {
+object Test_Local {
 
   def main(args: Array[String]) {
 
