@@ -21,15 +21,18 @@ import scala.util.control.NonFatal
 object _Dstream {
 
   def main(args: Array[String]): Unit = {
-
-
-
-
     // Create a local StreamingContext with two working thread and batch interval of 1 second.
     // The master requires 2 cores to prevent from a starvation scenario.
 
     val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")
     val ssc = new StreamingContext(conf, Seconds(1))
+    val lines = ssc.socketTextStream("localhost",9999)
+    // Using this DStream (lines) we will perform  transformation or output operation.
+    val words = lines.flatMap(_.split(" "))
+    val wordCounts = words.map(x => (x, 1)).reduceByKey(_ + _)
+    wordCounts.print()
+    ssc.start()        // Start the computation
+    ssc.awaitTermination()
 
   }
   }
