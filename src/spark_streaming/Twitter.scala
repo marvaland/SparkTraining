@@ -27,10 +27,10 @@ object Twitter {
   def main(args: Array[String]): Unit = {
 
 
-   var Consumer_Key =	"gthygfDCGKnbay6C3LJTgIysw"
-   var  Consumer_Secret =	"uK25g5oAMUoJ6tzfqmIL7Kpgx7Vt1b4x5WUuMZlNPeHjjJOE99"
-   var Access_Token ="822870299087486976-ObXpcklEuI9GldaxLYwNbYOKovaYHwT"
-   var Access_Token_Secret	="VcuO4SXa65S1fsS1LsUCoX702vsYq0Sp0tkNLeKbJmCJU"
+   var Consumer_Key =	""
+   var  Consumer_Secret =	""
+   var Access_Token =""
+   var Access_Token_Secret	=""
 
     // Create a local StreamingContext with two working thread and batch interval of 1 second.
     // The master requires 2 cores to prevent from a starvation scenario.
