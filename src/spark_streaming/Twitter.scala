@@ -41,7 +41,7 @@ object Twitter {
    sc.setLogLevel("WARN")
 
   //  val Array(consumerKey, consumerSecret, accessToken, accessTokenSecret) = args.take(4)
-    val filters =Seq("Modi")// args.takeRight(args.length - 4)
+    val filters =Seq("Environment")// args.takeRight(args.length - 4)
 
     // Set the system properties so that Twitter4j library used by twitter stream
     // can use them to generat OAuth credentials
