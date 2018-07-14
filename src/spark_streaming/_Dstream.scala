@@ -24,9 +24,9 @@ object _Dstream {
     // Create a local StreamingContext with two working thread and batch interval of 1 second.
     // The master requires 2 cores to prevent from a starvation scenario.
 
-    val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")
+    val conf = new SparkConf().setMaster("local[*]").setAppName("NetworkWordCount")
     val ssc = new StreamingContext(conf, Seconds(1))
-    val lines = ssc.socketTextStream("localhost",9999)
+    val lines = ssc.socketTextStream("localhost",9999) // $ nc -lk 9999 => in ubantu
     // Using this DStream (lines) we will perform  transformation or output operation.
     val words = lines.flatMap(_.split(" "))
     val wordCounts = words.map(x => (x, 1)).reduceByKey(_ + _)
