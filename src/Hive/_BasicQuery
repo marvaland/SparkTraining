@@ -1,0 +1,190 @@
+------------------------------create database-----------------------------
+create database if not exists maindb ;
+describe maindb;
+
+create database if not exists Devdb comment 'Development DB ' ;
+describe database extended devdb;
+
+
+create database if not exists Devdb with dbproperties ('creator' ='Mahendra' ,'date'='2018-07-17');
+describe database extended devdb;
+
+
+show databases ;
+---------------------------------------------------------------------------
+
+create table if not exists table1 (col1 string ,col2 array<string> , col3 string ,col4 int )
+row format delimited fields teminated by ','
+collection items terminated by ':'
+lines terminated by '\n'
+stored as textfiles;
+
+mahendra,mumbai:bangalore,happy,1234
+Surya,Delhi:chennai,veryhappy,5678
+
+
+load data local inpath '/home/user/table1' into table table1
+load data local inpath '/home/user/table1' overwride table table1
+
+select * from table1;
+
+SELECT col1, col2 FROM table1 CLUSTER BY col1;
+
+SELECT col1, col2 FROM table1 DISTRIBUTE BY col1 SORT BY col1 ASC, col2 DESC;
+
+
+--------------------------------------multi insert ----------------------------------
+
+from table1
+insert into table table2 select col1,col2,col3,col4
+insert into table table3 select col1,col2,col3,col4
+
+---------------------------------------- complex data Types-----------------------
+
+Array :
+
+Struct :
+
+Map :
+
+
+--------------------------------------Partitioning -----------------
+SHOW PARTITIONS table1;
+Static :
+
+load data local inpath '/home/user/table1' into table table1 partition (year =2018)
+
+Dynamic :
+
+
+--------------------------------------Table Types
+-Inernal
+-External
+-Tmp
+
+
+
+-------------------------------------Create Table (Parquet)--------------------------
+
+
+drop table if exists hdp_sampleTable;
+CREATE EXTERNAL TABLE `hdp_sampleTable`(
+  `id` int,
+  `name` string
+  )
+ROW FORMAT SERDE
+  'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+STORED AS
+INPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat'
+LOCATION
+  'wasb://xxxxx@xxxxxxxx.blob.core.windows.net/data/hdp_sampleTable';
+
+INSERT INTO TABLE hdp_sampleTable (id,name) values(1,'MyName');
+SELECT * FROM hdp_sampleTable LIMIT 10;
+
+
+-------------------------------partition Table (Parquet)------------------------
+
+  CREATE EXTERNAL TABLE `hdp_partitionTable`(
+  `id` int,
+  `name` string
+      )
+  PARTITIONED BY (`date_part_col` string )
+ROW FORMAT SERDE
+  'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat'
+LOCATION
+  'wasb://xxxxx@xxxxxxxx.blob.core.windows.net/data/hdp_partitionTable';
+
+
+ INSERT INTO TABLE hdp_partitionTable partition(date_part_col) select 1,'myname','2018-11-11' as date_part_col
+
+msck repair table  `hdp_sampleTable`;
+
+--------------------------------Bucketing Table (Parquet)----------------------------
+
+set hive.enforce.bucketing = true;
+set hive.dynamic.partition.mode=nonstrict;
+
+create table BucketTable (id int ,name string,city string )
+ PARTITIONED BY (`year` string )
+ Clusterd by (city) into 4 buckets
+ stored As textfile
+ location 'user/data/BucketTable'
+
+ insert into BucketTable partition (year) select c1,c2,c3,c4 from tempTable;
+
+
+
+---------------------------------create table (ORC) ---------------------------------
+CREATE TABLE table10 (
+  id int,
+  name STRING
+) STORED AS ORC
+TBLPROPERTIES ("orc.compress"="NONE" ,"orc.stripe.size"=67108864);
+
+create table MyDB.TEST (
+ Col1 String,
+ Col2 String,
+ Col3 String,
+ Col4 String)
+ STORED AS INPUTFORMAT
+   'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'
+ OUTPUTFORMAT
+    'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat';
+LOAD DATA INPATH '/hdfs/dir/folder/to/orc/files/' INTO TABLE MyDB.TEST;
+
+
+ CREATE TABLE test (name STRING)
+
+> row format serde
+> 'org.apache.hadoop.hive.ql.io.orc.OrcSerde'
+>  stored as inputformat
+>   'org.apache.hadoop.hive.ql.io.orc.OrcInputFormat'
+>   outputformat
+>   'org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat';
+---------------------------------Partition table (ORC) ---------------------------------
+
+---------------------------------bucket  table (ORC) ---------------------------------
+
+---------------------------------UDF------------------------------------------
+
+-----------------------------------Bash----------------------------------
+
+bash#hive-e "select * from foo1">>foo1.txt
+---------------------------------------------------------------------------
+
+CREATE TABLE test_details_txt( visit_id INT, store_id SMALLINT) STORED AS TEXTFILE;
+CREATE TABLE test_details_orc( visit_id INT, store_id SMALLINT) STORED AS ORC;
+
+-- Load into Text table
+LOAD DATA LOCAL INPATH '/home/user/test_details.txt' INTO TABLE test_details_txt;
+
+-- Copy to ORC table
+INSERT INTO TABLE test_details_orc SELECT * FROM test_details_txt;
+
+
+
+-------------compression format-----------------------------
+SNAPPY for time based performance,
+ZLIB for resource performance (Drive Space).
+
+--------------------------------optimization------------------------------
+
+Time Base :
+tblproperties ("orc.compress"="SNAPPY", "orc.stripe.size"="67108864","orc.row.index.stride"="50000")
+
+
+Analytics Base :
+tblproperties ("orc.compress"="ZLIB", "orc.stripe.size"="268435456", "orc.row.index.stride"="10000")
+-- stripe size and index stride values are defaults and can be omitted.
+-- included here for clarity and comparison.
+
+
+

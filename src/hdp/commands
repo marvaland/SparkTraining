@@ -1,0 +1,50 @@
+
+
+
+
+https://xxxxxx.azurehdinsight.net/jupyter
+https://xxxxx.azurehdinsight.net/yarnui/hn/cluster/apps/RUNNING
+https://xxxxxx.azurehdinsight.net/#/main/dashboard/metrics
+
+
+spark-submit --class test --master yarn --deploy-mode cluster /home/test/scalaApp.jar
+spark-submit --class test --master yarn --deploy-mode cluster /home/test/scalaApp.jar
+
+
+hadoop fs -copyFromLocal  "input" "output"
+
+hadoop fs -rmr wasb:///aims/test/xxxx-1.0-SNAPSHOT.jar
+
+
+hdfs dfsadmin -D 'fs.default.name=hdfs://mycluster/' -safemode leave
+
+
+  hadoop fs -ls wasb:///aims/test/*
+
+   hadoop fs -copyFromLocal xxx-1.0-SNAPSHOT.jar wasb:///aims/test/
+
+    hadoop fs -cp 'wasb://xxxx@xxxx.blob.core.windows.net/from' 'wasb://xxxxx@xxxx.blob.core.windows.net/to'
+
+
+-----------------------------------------------------------------
+
+Here is the logic to find the number of executors per node from the above example of a Spark 2.0.0 cluster.
+
+Total memory = 30 GB
+yarn.nodemanager.resource.memory = 26680 MB
+If number of executor per node = 2
+
+Total resource memory = number of executors per node * (spark.executor.memory + spark.yarn.executor.memoryOverhead)
+That is 2 * (12 GB + 1 GB) = 26 GB
+
+Which is equivalent to the value of yarn.nodemanager.resource.memory
+Here is the logic to check whether or not the number of cores per executor is correct from the above example of a Spark 2.0.0 cluster.
+
+Total number of cores = 8
+If spark.executor.cores = 4 and number of executor per node = 2
+
+Total number of cores = spark.executor.cores * number of executors per node
+
+In the above table, spark.executor.cores = 4 and number of executors per node = 2
+Hence, total number of cores = 4 * 2
+Thus, the total number of cores = 8

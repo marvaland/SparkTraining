@@ -18,12 +18,29 @@ object Test_Local {
 
 
 
-    val conf:SparkConf = new SparkConf().setAppName("Histogram").setMaster("local[*]")
+   val conf:SparkConf = new SparkConf().setAppName("Histogram").setMaster("local[*]")
     val sc:SparkContext = new SparkContext(conf)
 
 
+/*....word count....*/
+    val rawData = sc.textFile(args(0))
+    //convert the lines into words using flatMap operation
+    val words = rawData.flatMap(line => line.split(" "))
+    //count the individual words using map and reduceByKey operation
+    val wordCount = words.map(word => (word, 1)).reduceByKey(_ + _)
+    //Save the result
+    wordCount.saveAsTextFile(args(1))
+    //stop the spark context
 
-    println("TestSuccessfull");
+
+
+
+
+
+
+
+
+     println("TestSuccessfull");
   }
 }
 

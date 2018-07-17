@@ -1,5 +1,5 @@
 package spark_basic
 
-object _Parallelize {
+object Functional {
 
 }

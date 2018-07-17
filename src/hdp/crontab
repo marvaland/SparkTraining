@@ -1,0 +1,4 @@
+#
+# m h  dom mon dow   command
+
+00 09  * * * sudo bash /home/xxxxx/test/00_330.sh
