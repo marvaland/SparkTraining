@@ -7,7 +7,7 @@ import org.apache.spark.sql.{Dataset, SQLContext, SparkSession}
 
 //data set //data freame // RDD
 object _Spark_DataTypes {
-  case class Person(name : String , age : Int)
+  //case class Person(name : String , age : Int)
   def main(args: Array[String]) {
 
 
@@ -15,6 +15,7 @@ object _Spark_DataTypes {
 
     /*----collection....*/
     val data = Array(1, 2, 3, 4, 5)
+    data.map(a=>a+1).map(z=>(z,1)).map(x=>x)
 
     val fruit: List[String] = List("apples", "oranges", "pears")
 
@@ -33,13 +34,15 @@ object _Spark_DataTypes {
 
 
 
+
+
     /*   data set - data Frame --RDD */
 
-    val personRDD = spark.sparkContext.makeRDD(Seq(Person("A",10),Person("B",20)))
+   // val personRDD = spark.sparkContext.makeRDD(Seq(Person("A",10),Person("B",20)))
 
-    val df = spark.createDataFrame(personRDD).toDF()
+    //val df = spark.createDataFrame(personRDD).toDF()
 
-    val ds:  Dataset[Person] = df.as[Person]
+    //val ds:  Dataset[Person] = df.as[Person]
 
 
 

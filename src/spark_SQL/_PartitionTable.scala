@@ -16,7 +16,7 @@ object _PartitionTable {
     spark.sql("set hive.exec.dynamic.partition=true")
 
 
-    spark.sql(s"""insert into default.datatableloadhistory partition(date_stamp) select CURRENT_DATE,CURRENT_DATE,'$jobTime','$load_type','APP','0','$st_time','$end_time','$min','$status','VALIDATION$jobTime','$date_set' as date_stamp from DataTableloadHistory limit 1""")
+   // spark.sql(s"""insert into default.datatableloadhistory partition(date_stamp) select CURRENT_DATE,CURRENT_DATE,'$jobTime','$load_type','APP','0','$st_time','$end_time','$min','$status','VALIDATION$jobTime','$date_set' as date_stamp from DataTableloadHistory limit 1""")
 
     println("TestSuccessfull");
   }

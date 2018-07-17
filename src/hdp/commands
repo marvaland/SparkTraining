@@ -6,10 +6,15 @@ https://xxxxxx.azurehdinsight.net/jupyter
 https://xxxxx.azurehdinsight.net/yarnui/hn/cluster/apps/RUNNING
 https://xxxxxx.azurehdinsight.net/#/main/dashboard/metrics
 
+---------------------------------------------------------
+
 
 spark-submit --class test --master yarn --deploy-mode cluster /home/test/scalaApp.jar
 spark-submit --class test --master yarn --deploy-mode cluster /home/test/scalaApp.jar
+--master local[4] --jars code.jar
 
+
+-------------------------------------------------------------
 
 hadoop fs -copyFromLocal  "input" "output"
 

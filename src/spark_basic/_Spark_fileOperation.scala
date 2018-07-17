@@ -15,7 +15,7 @@ object _Spark_fileOperation {
 
 
   //read
-
+    val sample =spark.sqlContext.read.textFile("file:D:\\Training\\HDinsight_Spark\\sample.txt")
 
     val json_source = spark.read.json("wasb://xxxx@xxxx.blob.core.windows.net/voot/jsonTest/arb-data-c09-s01-r02_2017-01-31.arb.json")
     val csv_source = spark.read.csv("wasb://xxxx@xxxx.blob.core.windows.net/test/file.csv")
@@ -42,4 +42,6 @@ object _Spark_fileOperation {
     println("TestSuccessfull");
   }
 }
+
+
 
