@@ -9,7 +9,7 @@ object _PartitionTable {
 
   def main(args: Array[String]) {
 
-    val spark = SparkSession.builder().appName("VootMobileDataETL").enableHiveSupport().getOrCreate()
+    val spark = SparkSession.builder().appName("xxxxx").enableHiveSupport().getOrCreate()
     val sqlcontext: SQLContext = spark.sqlContext
 
     spark.sql("set hive.exec.dynamic.partition.mode=nonstrict")

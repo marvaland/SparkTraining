@@ -13,7 +13,7 @@ object _Parallelize {
   def main(args: Array[String]) {
 
 
-    val spark = SparkSession.builder().appName("VootMobileDataETL").enableHiveSupport().getOrCreate()
+    val spark = SparkSession.builder().appName("xxxxx").enableHiveSupport().getOrCreate()
 
 
      val pool = Executors.newFixedThreadPool(12)

@@ -7,7 +7,7 @@ import org.apache.spark.sql.{Dataset, SQLContext, SparkSession}
 
 //data set //data freame // RDD
 object _Spark_DataTypes {
-  //case class Person(name : String , age : Int)
+  case class Person(name : String , age : Int)
   def main(args: Array[String]) {
 
 
@@ -31,20 +31,19 @@ object _Spark_DataTypes {
     val ita = Iterator(20,40,2,50,69, 90)
 
 
-
-
-
-
-
     /*   data set - data Frame --RDD */
 
-   // val personRDD = spark.sparkContext.makeRDD(Seq(Person("A",10),Person("B",20)))
+    val personRDD = spark.sparkContext.makeRDD(Seq(Person("A",10),Person("B",20)))
 
-    //val df = spark.createDataFrame(personRDD).toDF()
+    val df = spark.createDataFrame(personRDD).toDF()
 
-    //val ds:  Dataset[Person] = df.as[Person]
+    val ds:  Dataset[Person] = df.as[Person]
 
 
+
+    df.select("name").show()
+    import spark.implicits._
+    df.select($"name", $"age" + 1).show()
 
 
 

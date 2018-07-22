@@ -1,4 +1,4 @@
-/*
+
 
 package spark_streaming
 
@@ -45,6 +45,9 @@ object Twitter {
 
     // Set the system properties so that Twitter4j library used by twitter stream
     // can use them to generat OAuth credentials
+
+
+
     System.setProperty("twitter4j.oauth.consumerKey", Consumer_Key)
     System.setProperty("twitter4j.oauth.consumerSecret", Consumer_Secret)
     System.setProperty("twitter4j.oauth.accessToken", Access_Token)
@@ -94,4 +97,4 @@ object Twitter {
   }
 }
 
-*/
+

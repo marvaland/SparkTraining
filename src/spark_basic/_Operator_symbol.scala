@@ -26,8 +26,6 @@ object _Operator_symbol {
 
    // First '_' is for placeholder of anonymous function; Second '_2' is member of case class
 
-
-
    // reduceByKey((a,b) => a+b) => reduceByKey(_ + _)
 
     println("TestSuccessfull");

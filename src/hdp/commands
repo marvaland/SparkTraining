@@ -53,3 +53,5 @@ Total number of cores = spark.executor.cores * number of executors per node
 In the above table, spark.executor.cores = 4 and number of executors per node = 2
 Hence, total number of cores = 4 * 2
 Thus, the total number of cores = 8
+
+------------------------------------------------------------------

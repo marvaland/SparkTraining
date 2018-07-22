@@ -12,16 +12,22 @@ object _Spark_fileOperation {
 
     val spark = SparkSession.builder().appName("VootMobileDataETL").enableHiveSupport().getOrCreate()
     val sqlcontext: SQLContext = spark.sqlContext
-
+    spark.conf.set(
+      "fs.azure.account.key.<your-storage-account-name>.blob.core.windows.net",
+      "<your-storage-account-access-key>")
+    spark.sparkContext.hadoopConfiguration.set(
+      "fs.azure.account.key.<your-storage-account-name>.blob.core.windows.net",
+      "<your-storage-account-access-key>"
+    )
 
   //read
     val sample =spark.sqlContext.read.textFile("file:D:\\Training\\HDinsight_Spark\\sample.txt")
 
-    val json_source = spark.read.json("wasb://xxxx@xxxx.blob.core.windows.net/voot/jsonTest/arb-data-c09-s01-r02_2017-01-31.arb.json")
+    val json_source = spark.read.json("file:\\\D:\\sample data\\V18\\sample.json")
     val csv_source = spark.read.csv("wasb://xxxx@xxxx.blob.core.windows.net/test/file.csv")
 
     var df = spark.read.json("logs.json")
-    val showdlyparq = sqlcontext.read.parquet("wasb://viacom18@v18biblobstorprod.blob.core.windows.net/voot/DAILY_DWH_TO_BLOB_CONTENT_MAPPER/")
+    val showdlyparq = sqlcontext.read.parquet("wasb://xxxxxx@xxxxxxxxx.blob.core.windows.net/xxxx/xxxx/")
 
     val dataFrame1 = spark.read.json("example.json")
     val dataFrame2 = spark.read.csv("example.csv")
