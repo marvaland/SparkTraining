@@ -23,7 +23,7 @@ object _Spark_fileOperation {
   //read
     val sample =spark.sqlContext.read.textFile("file:D:\\Training\\HDinsight_Spark\\sample.txt")
 
-    val json_source = spark.read.json("file:\\\D:\\sample data\\V18\\sample.json")
+    val json_source = spark.read.json("file:\\D:\\sample data\\V18\\sample.json")
     val csv_source = spark.read.csv("wasb://xxxx@xxxx.blob.core.windows.net/test/file.csv")
 
     var df = spark.read.json("logs.json")

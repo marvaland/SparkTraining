@@ -37,7 +37,7 @@ object _Spark_DataTypes {
 
     val df = spark.createDataFrame(personRDD).toDF()
 
-    val ds:  Dataset[Person] = df.as[Person]
+   // val ds:  Dataset[Person] = df.as[Person]
 
 
 
